@@ -1,0 +1,106 @@
+Redis数据库操作命令
+
+一、string
+	概述：string是Redis最基本的类型，最大能存储512MB的数据，string类型是二进制安全的，
+即可以存储任何数据，比如：数字、图片、序列化对象等。
+	1、设置
+		a、设置键值
+			set key value  如：set a ""xlmark
+			将键key设定为指定的“字符串”值。如果	key	已经保存了一个值，那么这个操作会直接覆盖原来的值，
+			并且忽略原始类型。当set命令执行成功之后，之前设置的过期时间都将失效.
+		b、设置键值和过期时间,时间是秒为单位
+			setex key seconds value.如：setex name 10 "xzlmark"
+		c、设置多个键值
+			mset key value [key value...]
+	2、获取
+		a、根据键获取值，如果不存在则返回None（null、 0 或nil） 语法：get key
+		b、获取多个值。mget key [key1 key2...]
+	3、运算（字符串类型的数字）
+		a、对key对应的值加1.	incr key
+		b、对key对应的值减1.   decr key
+		c、对key对应的值加整数：	incrby key 整数
+		d、对key对应的值减整数：	decrby key 整数
+	4、其他
+		a、追加一个值到key 	append key
+		b、获取key对应的字符串value的长度，或则0（key不存在）		strlen key
+二、key
+	1、查找键，参数支持正则。	keys pattern 例如：keys * 
+		支持的正则表达模式：
+			h?llo 匹配 hello, hallo 和 hxllo
+			h*llo 匹配 hllo 和 heeeello
+			h[ae]llo 匹配 hello 和 hallo, 但是不匹配 hillo
+			h[^e]llo 匹配 hallo, hbllo, … 但是不匹配 hello
+			h[a-b]llo 匹配 hallo 和 hbllo
+			如果你想取消字符的特殊匹配（正则表达式，可以在它的前面加\。
+	2、查询key是否存在。存在返回1，不存在返回0	exists key
+	3、获取key的存储类型。	type key
+	4、删除键及对应的值。	del key
+	5、设置key的过期时间	expire key 秒数
+	6、查看key剩余的过期时间，key不存在或过期，返回-2；存在且没有设置过期时间（永久有效）返回-1。	ttl key
+三、hash
+	概述：hash用于存储对象
+		{
+			name:"xzl",
+			age:18
+		}
+	1、设置
+		a、设置key指定的哈希集中指定字段的值。	hset key field value 例如：hset p1(名字) name "xzl"
+		b、设置多个：hmset key field value [field value]  例如：hmset p1 name "xz" age 18
+	
+	2、获取
+		a、返回key指定的哈希集中该字段所关联的值。 hget key field.如：hget p1 name
+		b、多个。hmget key field [field ...]     如：hmget p1 name age
+		c、获取所有属性和值。 hgetall key
+		d、获取hash的所有字段。 hkeys key
+		e、获取hash的所有值		hvals key
+		f、返回hash里所有字段的数量 	hlen key
+	3、其他
+		a、判断属性是否存在，存在则返回1，不存在则返回0  hexists key field
+		b、删除属性及值。  hdel key field[field...]
+		c、返回hash里面指定field的长度	hstrlen key field   （不能使用）
+四、list
+	概述：列表的元素类型为string，按照插入的顺序排序，在列表的头部或尾部添加元素。
+	1、设置
+		a、在列表头部插入：lpush key value [key ...]
+		b、在尾部插入：rpush key value [key...]
+		c、把value插入存于key的列表中基准值pivot的前后或后面。	linsert key before|after pivot value
+		d、设置队列里一个元素的值。 lset key index value   注意： index是从0开始的。
+	2、获取
+		a、从队列的左边出队一个元素。lpop key
+		b、从队列的右边出队一个元素。rpop key
+		c、从列表中获取指定返回的元素。lrange key start stop
+	3、其他
+		a、修剪到指定返回内的清单。ltrim key start stop 注意：修剪后列表中就只有裁剪的内容
+		b、返回存储在key里的list长度。llen key
+		c、返回index处列表中的值。 	lindex key index
+五、set
+	概述：无序集合，元素类型为string，元素具有唯一性，不重复
+	1、设置
+		a、添加元素  sadd key member[member...] 例如：SADD myset 'hello' 'word'
+	2、获取
+		a、返回key集合中所有元素（Returns all the members of the set value stored at key.）。 格式：smembers key
+		b、返回元素的个数（Returns the set number of elements of the set stored at key.）格式：scard key
+	3、其他
+		a、求多个集合的交集。	sinter key [key...]
+		b、求多个集合的差集.	sdiff kye [key...]
+		c、求多个集合的和集.	sunion key [key...]
+		d、判断元素是否在集合中(存在返回1，不存在返回0)。 	sismember key member
+六、zset
+	概述：有序集合，元素类型为string，元素具有唯一性，不能重复；
+		   每个元素都会关联一个double类型的score（表示权重），通过权重的大小排序，元素的score可以相同
+	1、设置
+		a、添加。	zadd key score member[score  member...]
+	2、获取
+		a、返回指定范围的元素。srange key start end
+		b、返回元素个数。	zcard key
+		c、返回有序集合中，score在min和max之间的元素的个数。	zcount key min max
+		d、返回有序集合key中，成员member的score值。	zscore key member
+	
+		
+		
+		
+		
+		
+		
+		
+		

@@ -1,0 +1,10 @@
+新建用户： useradd 用户名
+密码设置： passwd  用户名
+
+删除用户：userdel 用户名
+
+新建组：  groupadd  组名
+删除组：  groupdel  组名
+
+将用户添加到组： gpasswd -a 用户名  组名
+将用户从组中删除： gpasswd -d 用户名 组名
