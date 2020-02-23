@@ -1,0 +1,18 @@
+ctrl+D       复制一行
+Ctrl+Y       删除一行
+shift+回车键  快速换行
+ctrl+/       快速注释/去除注释
+tab键        缩进
+shift+tab    取消缩进
+ctrl+r       替换
+Ctrl+加号/减号  快速展开或折叠代码
+ctrl+shift+加号/减号 展开或折叠所有代码
+所有的快捷键  settings-keymap
+#  todo     添加TODO，可以通过todo命令窗口找到
+Ctrl + Space	基本代码补全（任何类、方法或变量的名称）
+Ctrl + Alt + Space	类名补全（任何独立于当前导入的项目类的名称）
+--------------------------------------------------------------
+模板　Live Template
+快捷键	功能（中文）	功能（英文）
+Ctrl + Alt + J	当前行使用模板	Surround with Live Templates
+Ctrl + J	插入模板	Insert Live Template
